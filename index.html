@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#ffcc00" />
+  <meta name="theme-color" content="#7c3aed" />
   <title>AI Calendar MVP</title>
   <style>
     :root {
@@ -16,8 +16,9 @@
       --text: #1f2937;
       --muted: #6b7280;
       --muted-2: #9aa3b2;
-      --accent: #ffcc00;
-      --accent-dark: #e0ad00;
+      --accent: #7c3aed;
+      --accent-dark: #6d28d9;
+      --accent-text: #fff;
       --blue: #3b82f6;
       --red: #ef4444;
       --shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
@@ -26,26 +27,29 @@
       --sidebar: 290px;
       --topbar: 66px;
       --mini-cell: 34px;
-      --hover: #f7f8fb;
-      --weekend-bg: #fbfcff;
-      --today-bg: #fffdf3;
+      --hover: #f5f0ff;
+      --weekend-bg: #faf8ff;
+      --today-bg: #f3edff;
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
     }
 
     [data-theme="dark"] {
-      --bg: #0e1014;
-      --surface: #171a21;
-      --surface-2: #21262f;
-      --surface-3: #1b1f27;
-      --line: #2a303b;
-      --line-soft: #232830;
-      --text: #e8eaed;
-      --muted: #9aa3b2;
-      --muted-2: #6b7484;
-      --shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --hover: #20242d;
-      --weekend-bg: #14171d;
-      --today-bg: #1d1c12;
+      --bg: #0d0020;
+      --surface: #130028;
+      --surface-2: #1e003d;
+      --surface-3: #17002f;
+      --line: #3d1060;
+      --line-soft: #2a0845;
+      --text: #ede0ff;
+      --muted: #b08ad0;
+      --muted-2: #7a5c9a;
+      --accent: #a855f7;
+      --accent-dark: #9333ea;
+      --accent-text: #fff;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
+      --hover: #2a0852;
+      --weekend-bg: #0f001d;
+      --today-bg: #1e0045;
     }
 
     * { box-sizing: border-box; }
@@ -114,9 +118,9 @@
       border-radius: 12px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #111827, #3f3f46);
-      color: var(--accent);
-      box-shadow: 0 8px 18px rgba(0,0,0,.13);
+      background: linear-gradient(135deg, #5b21b6, #8b5cf6);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(91, 33, 182, .4);
       font-weight: 900;
       flex-shrink: 0;
     }
@@ -254,17 +258,17 @@
       height: 46px;
       border-radius: 16px;
       background: var(--accent);
-      color: #111827;
+      color: var(--accent-text);
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 9px;
-      box-shadow: 0 12px 24px rgba(255, 204, 0, .26);
+      box-shadow: 0 12px 24px rgba(124, 58, 237, .32);
     }
 
     .create-btn:hover {
-      background: #ffd633;
+      background: var(--accent-dark);
     }
 
     .sidebar-section {
@@ -342,12 +346,17 @@
 
     [data-theme="dark"] .mini-day.selected {
       background: var(--accent);
-      color: #111827;
+      color: var(--accent-text);
     }
 
     .mini-day.today:not(.selected) {
-      background: #fff5c2;
-      color: #111827;
+      background: #ede0ff;
+      color: #4b1d8f;
+    }
+
+    [data-theme="dark"] .mini-day.today:not(.selected) {
+      background: #3d1060;
+      color: #e0c0ff;
     }
 
     [data-theme="dark"] .mini-day.today:not(.selected) {
@@ -429,8 +438,8 @@
     .ai-card {
       padding: 14px;
       border-radius: 18px;
-      background: radial-gradient(circle at 15% 10%, rgba(255, 204, 0, .4), transparent 35%),
-                  linear-gradient(135deg, #111827, #334155);
+      background: radial-gradient(circle at 15% 10%, rgba(168, 85, 247, .55), transparent 40%),
+                  linear-gradient(135deg, #1e003d, #3d1060);
       color: #fff;
       overflow: hidden;
       position: relative;
@@ -484,9 +493,31 @@
       position: sticky;
       top: 0;
       z-index: 9;
-      background: color-mix(in srgb, var(--surface) 94%, transparent);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
+      background: var(--surface);
+      border-bottom: 2px solid var(--line);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+
+    @keyframes slideFromRight {
+      from { opacity: 0; transform: translateX(5%); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideFromLeft {
+      from { opacity: 0; transform: translateX(-5%); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .slide-from-right { animation: slideFromRight .22s cubic-bezier(.2,.6,.4,1); }
+    .slide-from-left  { animation: slideFromLeft  .22s cubic-bezier(.2,.6,.4,1); }
+
+    .time-select-overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      background: rgba(168, 85, 247, .22);
+      border: 2px solid rgba(168, 85, 247, .7);
+      border-radius: 8px;
+      pointer-events: none;
+      z-index: 3;
     }
 
     .hrow { display: grid; }
@@ -545,7 +576,7 @@
 
     .day-title.today .date {
       background: var(--accent);
-      color: #111827;
+      color: var(--accent-text);
     }
 
     /* all-day band */
@@ -648,7 +679,7 @@
     }
 
     .hour-cell:hover {
-      background: rgba(255, 204, 0, .08);
+      background: rgba(124, 58, 237, .07);
     }
 
     .now-line {
@@ -791,7 +822,7 @@
 
     .month-cell.today .month-date {
       background: var(--accent);
-      color: #111827;
+      color: var(--accent-text);
     }
 
     .month-event {
@@ -954,12 +985,12 @@
       height: 60px;
       border-radius: 20px;
       background: var(--accent);
-      color: #111827;
+      color: var(--accent-text);
       font-size: 30px;
       font-weight: 600;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 14px 30px rgba(255, 204, 0, .42);
+      box-shadow: 0 14px 30px rgba(124, 58, 237, .5);
       z-index: 45;
     }
 
@@ -1131,11 +1162,11 @@
     }
 
     .save-btn {
-      background: #111827;
-      color: white;
+      background: var(--accent);
+      color: var(--accent-text);
     }
 
-    [data-theme="dark"] .save-btn { background: var(--accent); color: #111827; }
+    [data-theme="dark"] .save-btn { background: var(--accent); color: var(--accent-text); }
 
     .toast {
       position: fixed;
@@ -1235,7 +1266,7 @@
       }
       .mobile-views button.active {
         background: var(--accent);
-        color: #111827;
+        color: var(--accent-text);
       }
 
       /* sidebar becomes drawer */
@@ -1506,6 +1537,7 @@
 
         <div class="modal-actions">
           <button type="button" class="danger-btn" id="deleteEvent">Удалить</button>
+          <button type="button" class="ghost-btn" id="duplicateEvent" style="display:none">Дублировать</button>
           <div class="right-actions">
             <button type="button" class="cancel-btn" id="cancelModal">Отмена</button>
             <button type="submit" class="save-btn">Сохранить</button>
@@ -1636,6 +1668,7 @@
       closeModal: document.getElementById("closeModal"),
       cancelModal: document.getElementById("cancelModal"),
       deleteEvent: document.getElementById("deleteEvent"),
+      duplicateEvent: document.getElementById("duplicateEvent"),
       eventTitle: document.getElementById("eventTitle"),
       eventDate: document.getElementById("eventDate"),
       eventStart: document.getElementById("eventStart"),
@@ -1681,7 +1714,7 @@
       document.documentElement.setAttribute("data-theme", theme);
       els.themeIcon.innerHTML = theme === "dark" ? ICON_SUN : ICON_MOON;
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute("content", theme === "dark" ? "#171a21" : "#ffcc00");
+      if (meta) meta.setAttribute("content", theme === "dark" ? "#0d0020" : "#7c3aed");
     }
 
     function toggleTheme() {
@@ -1771,6 +1804,18 @@
         showToast("Событие удалено");
       });
 
+      els.duplicateEvent.addEventListener("click", () => {
+        if (!state.editingId) return;
+        const original = state.events.find(ev => ev.id === state.editingId);
+        if (!original) return;
+        const copy = { ...original, id: uid(), title: original.title + " (копия)" };
+        state.events.push(copy);
+        saveEvents();
+        closeModal();
+        renderAll();
+        showToast("Событие дублировано");
+      });
+
       els.eventForm.addEventListener("submit", (e) => {
         e.preventDefault();
         saveEventFromForm();
@@ -1801,9 +1846,11 @@
         const t = e.changedTouches[0];
         const dx = t.clientX - x0, dy = t.clientY - y0, dt = Date.now() - t0;
         x0 = null;
-        if (dt > 600) return;
-        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.8) {
-          navigate(dx < 0 ? 1 : -1);
+        if (dt > 700) return;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.8) {
+          const velocity = Math.abs(dx) / Math.max(1, dt); // px/ms
+          const steps = velocity > 1.2 ? 2 : 1; // fast flick = skip 2 periods
+          navigate((dx < 0 ? 1 : -1) * steps);
         }
       }, { passive: true });
     }
@@ -1826,6 +1873,7 @@
       else if (state.view === "agenda") state.selectedDate = addDays(state.selectedDate, step * 7);
       else state.selectedDate = new Date(state.selectedDate.getFullYear(), state.selectedDate.getMonth() + step, 1);
       state.miniDate = new Date(state.selectedDate);
+      state._navDir = step > 0 ? "right" : "left";
       renderAll();
     }
 
@@ -1834,6 +1882,13 @@
       renderMiniMonth();
       renderCalendar();
       renderUpcoming();
+      if (state._navDir) {
+        const cls = state._navDir === "right" ? "slide-from-right" : "slide-from-left";
+        els.calendarShell.classList.remove("slide-from-right", "slide-from-left");
+        void els.calendarShell.offsetWidth; // reflow
+        els.calendarShell.classList.add(cls);
+        state._navDir = null;
+      }
     }
 
     function renderTitle() {
@@ -2083,6 +2138,83 @@
           showToast("Событие перенесено");
         });
       });
+
+      /* time range drag selection on day columns */
+      let dragState = null;
+
+      function getHourMinFromY(col, clientY) {
+        const rect = col.getBoundingClientRect();
+        const y = clientY - rect.top;
+        const totalMinutes = Math.max(0, Math.floor(y / HOUR_HEIGHT * 60));
+        const h = START_HOUR + Math.floor(totalMinutes / 60);
+        const m = totalMinutes % 60;
+        return { h: Math.min(h, 23), m: Math.min(m, 59) };
+      }
+
+      function snapToSlot(h, m) {
+        const snapped = Math.round(m / 30) * 30;
+        if (snapped >= 60) return { h: Math.min(h + 1, 23), m: 0 };
+        return { h, m: snapped };
+      }
+
+      els.calendarShell.querySelectorAll(".day-col").forEach(col => {
+        col.addEventListener("touchstart", (e) => {
+          if (e.target.closest(".event")) return;
+          const touch = e.changedTouches[0];
+          const { h, m } = getHourMinFromY(col, touch.clientY);
+          const snapped = snapToSlot(h, m);
+          dragState = {
+            col,
+            date: col.dataset.date,
+            startH: snapped.h,
+            startM: snapped.m,
+            endH: snapped.h,
+            endM: snapped.m,
+            moved: false,
+            overlay: null,
+            startY: touch.clientY
+          };
+        }, { passive: true });
+
+        col.addEventListener("touchmove", (e) => {
+          if (!dragState || dragState.col !== col) return;
+          const touch = e.changedTouches[0];
+          const dy = Math.abs(touch.clientY - dragState.startY);
+          if (dy < 12) return;
+          dragState.moved = true;
+          const { h, m } = getHourMinFromY(col, touch.clientY);
+          const snapped = snapToSlot(h, m);
+          dragState.endH = snapped.h;
+          dragState.endM = snapped.m;
+
+          const startMin = Math.min(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
+          const endMin   = Math.max(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
+
+          const topPx    = (startMin - START_HOUR * 60) / 60 * HOUR_HEIGHT;
+          const heightPx = Math.max(HOUR_HEIGHT / 2, (endMin - startMin) / 60 * HOUR_HEIGHT);
+
+          if (!dragState.overlay) {
+            dragState.overlay = document.createElement("div");
+            dragState.overlay.className = "time-select-overlay";
+            col.appendChild(dragState.overlay);
+          }
+          dragState.overlay.style.top    = `${topPx}px`;
+          dragState.overlay.style.height = `${heightPx}px`;
+        }, { passive: true });
+
+        col.addEventListener("touchend", () => {
+          if (!dragState || dragState.col !== col) return;
+          if (dragState.overlay) dragState.overlay.remove();
+          if (dragState.moved) {
+            const startMin = Math.min(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
+            const endMin   = Math.max(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
+            const start = `${pad(Math.floor(startMin / 60))}:${pad(startMin % 60)}`;
+            const end   = `${pad(Math.floor(endMin   / 60))}:${pad(endMin   % 60)}`;
+            openModal({ date: dragState.date, start, end });
+          }
+          dragState = null;
+        }, { passive: true });
+      });
     }
 
     function bindEventInteractions() {
@@ -2293,6 +2425,7 @@
       els.eventAllDay.checked = Boolean(data.allDay);
       els.timeFields.style.display = els.eventAllDay.checked ? "none" : "grid";
       els.deleteEvent.classList.toggle("visible", Boolean(data.id));
+      els.duplicateEvent.style.display = data.id ? "" : "none";
       els.modalBackdrop.classList.add("open");
       setTimeout(() => els.eventTitle.focus(), 30);
     }
