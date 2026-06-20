@@ -37,22 +37,22 @@
     }
 
     [data-theme="dark"] {
-      --bg: #0f0e17;
-      --surface: #16151f;
-      --surface-2: #1e1d2a;
-      --surface-3: #1a1928;
-      --line: #282640;
-      --line-soft: #201f34;
-      --text: #dddce8;
-      --muted: #6e6e96;
-      --muted-2: #48486a;
-      --accent: #7c6df2;
-      --accent-dark: #6a5be0;
+      --bg: #09090f;
+      --surface: #0f0f1a;
+      --surface-2: #15152a;
+      --surface-3: #1a1a30;
+      --line: #1e1e38;
+      --line-soft: #17172e;
+      --text: #e2e2f2;
+      --muted: #5858a8;
+      --muted-2: #35355a;
+      --accent: #8b5cf6;
+      --accent-dark: #7c3aed;
       --accent-text: #fff;
-      --shadow: 0 2px 8px rgba(0,0,0,0.5);
-      --hover: #1e1d30;
-      --weekend-bg: #121121;
-      --today-bg: #1c1b2c;
+      --shadow: 0 2px 12px rgba(0,0,0,0.7);
+      --hover: #1a1a32;
+      --weekend-bg: #0c0c18;
+      --today-bg: #13133a;
     }
 
     * { box-sizing: border-box; }
@@ -701,31 +701,21 @@
 
     .event {
       position: absolute;
-      left: 4px;
-      right: 4px;
-      border-radius: 5px;
-      padding: 3px 7px 3px 9px;
-      border-left: 3px solid var(--ev-clr, var(--accent));
-      background: color-mix(in srgb, var(--ev-clr, var(--accent)) 11%, var(--surface-2));
-      color: var(--text);
+      left: 3px;
+      right: 3px;
+      border-radius: 4px;
+      padding: 3px 6px;
+      color: rgba(255,255,255,0.95);
       overflow: hidden;
       cursor: grab;
       z-index: 4;
-      min-height: 22px;
+      min-height: 20px;
       user-select: none;
     }
 
-    .event:hover {
-      background: color-mix(in srgb, var(--ev-clr, var(--accent)) 18%, var(--surface-2));
-    }
-
-    .event:active {
-      cursor: grabbing;
-    }
-
-    .event.compact {
-      padding: 2px 6px 2px 8px;
-    }
+    .event:hover { filter: brightness(1.12); }
+    .event:active { cursor: grabbing; }
+    .event.compact { padding: 2px 5px; }
 
     .event-title {
       font-weight: 600;
@@ -734,13 +724,13 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: var(--text);
+      color: rgba(255,255,255,0.96);
     }
 
     .event-time {
       margin-top: 1px;
       font-size: 11px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.72);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -749,7 +739,7 @@
     .event-desc {
       margin-top: 3px;
       font-size: 11px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.62);
       line-height: 1.25;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -762,7 +752,8 @@
       height: 5px;
       border-radius: 50%;
       flex-shrink: 0;
-      margin-top: 3px;
+      margin-top: 2px;
+      background: rgba(255,255,255,0.8);
     }
 
     .month-view {
@@ -839,16 +830,14 @@
       width: 100%;
       border-radius: 3px;
       padding: 2px 5px;
-      color: var(--text);
+      color: rgba(255,255,255,0.95);
       margin-bottom: 2px;
       font-size: 11px;
-      font-weight: 500;
+      font-weight: 600;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
       text-align: left;
-      border-left: 3px solid;
-      background: color-mix(in srgb, var(--ev-clr, var(--accent)) 14%, var(--surface-2));
     }
 
     /* mobile compact month dots */
@@ -1648,7 +1637,7 @@
     .allday-chip {
       border-radius: 4px;
       padding: 2px 6px;
-      color: var(--text);
+      color: rgba(255,255,255,0.95);
       font-size: 11px;
       font-weight: 600;
       white-space: nowrap;
@@ -1656,8 +1645,6 @@
       text-overflow: ellipsis;
       text-align: left;
       width: 100%;
-      border-left: 3px solid;
-      background: color-mix(in srgb, var(--chip-clr, var(--accent)) 14%, var(--surface-2));
     }
 
     /* 4-day view support */
@@ -2705,7 +2692,7 @@
               const cal = getCalendar(ev.calendarId);
               const color = ev.color || cal.color;
               const cls = "allday-chip" + (ev._holiday ? " holiday" : "");
-              return `<button class="${cls}" data-event-id="${ev.id}" data-date="${ev.date}" style="--chip-clr:${color};border-left-color:${color}">${escapeHtml(ev.title)}</button>`;
+              return `<button class="${cls}" data-event-id="${ev.id}" data-date="${ev.date}" style="background:${color}">${escapeHtml(ev.title)}</button>`;
             }).join("")}</div>`;
           }).join("")}
         </div>
@@ -2801,7 +2788,7 @@
       const locationLine = (ev.location && height > 56) ? `<div class="event-location">📍 ${escapeHtml(ev.location)}</div>` : "";
       return `
         <div class="${classes}" draggable="true" data-event-id="${ev.id}" data-date="${ev.date}"
-             style="top:${top}px;height:${height}px;--ev-clr:${color};${leftStyle}">
+             style="top:${top}px;height:${height}px;background:${color};${leftStyle}">
           <div class="event-head">
             ${check}
             <div style="min-width:0;flex:1">
@@ -2845,7 +2832,10 @@
 
     function bindGridInteractions() {
       els.calendarShell.querySelectorAll(".hour-cell").forEach(cell => {
+        /* on desktop, a simple click on a cell opens the modal;
+           on mobile we skip this so taps don't block scrolling */
         cell.addEventListener("click", () => {
+          if (isMobile()) return;
           const start = `${pad(Number(cell.dataset.hour))}:00`;
           openModal({ date: cell.dataset.date, start, end: addMinutesToTime(start, 60) });
         });
@@ -2867,7 +2857,7 @@
         });
       });
 
-      /* time range drag selection on day columns */
+      /* time range drag selection — shared helpers */
       let dragState = null;
 
       function getHourMinFromY(col, clientY) {
@@ -2885,6 +2875,74 @@
         return { h, m: snapped };
       }
 
+      function updateOverlay(ds) {
+        const startMin = Math.min(ds.startH * 60 + ds.startM, ds.endH * 60 + ds.endM);
+        const endMin   = Math.max(ds.startH * 60 + ds.startM, ds.endH * 60 + ds.endM);
+        const topPx    = (startMin - START_HOUR * 60) / 60 * HOUR_HEIGHT;
+        const heightPx = Math.max(HOUR_HEIGHT / 2, (endMin - startMin) / 60 * HOUR_HEIGHT);
+        if (!ds.overlay) {
+          ds.overlay = document.createElement("div");
+          ds.overlay.className = "time-select-overlay";
+          ds.col.appendChild(ds.overlay);
+        }
+        ds.overlay.style.top    = `${topPx}px`;
+        ds.overlay.style.height = `${heightPx}px`;
+      }
+
+      function commitDrag(ds) {
+        if (ds.overlay) ds.overlay.remove();
+        if (ds.moved) {
+          const startMin = Math.min(ds.startH * 60 + ds.startM, ds.endH * 60 + ds.endM);
+          const endMin   = Math.max(ds.startH * 60 + ds.startM, ds.endH * 60 + ds.endM);
+          const start = `${pad(Math.floor(startMin / 60))}:${pad(startMin % 60)}`;
+          const end   = `${pad(Math.floor(endMin   / 60))}:${pad(endMin   % 60)}`;
+          openModal({ date: ds.date, start, end });
+        }
+      }
+
+      /* ── DESKTOP: mouse drag-to-create ── */
+      els.calendarShell.querySelectorAll(".day-col").forEach(col => {
+        col.addEventListener("mousedown", (e) => {
+          if (e.button !== 0) return;
+          if (e.target.closest(".event, [data-resize]")) return;
+          e.preventDefault();
+          const { h, m } = getHourMinFromY(col, e.clientY);
+          const snapped = snapToSlot(h, m);
+          dragState = {
+            col,
+            date: col.dataset.date,
+            startH: snapped.h,
+            startM: snapped.m,
+            endH: snapped.h,
+            endM: snapped.m,
+            moved: false,
+            overlay: null,
+            startY: e.clientY,
+            type: "mouse"
+          };
+        });
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (!dragState || dragState.type !== "mouse") return;
+        const dy = Math.abs(e.clientY - dragState.startY);
+        if (dy < 8) return;
+        dragState.moved = true;
+        const { h, m } = getHourMinFromY(dragState.col, e.clientY);
+        const snapped = snapToSlot(h, m);
+        dragState.endH = snapped.h;
+        dragState.endM = snapped.m;
+        updateOverlay(dragState);
+      });
+
+      document.addEventListener("mouseup", (e) => {
+        if (!dragState || dragState.type !== "mouse") return;
+        const ds = dragState;
+        dragState = null;
+        commitDrag(ds);
+      });
+
+      /* ── MOBILE: touch drag-to-create ── */
       els.calendarShell.querySelectorAll(".day-col").forEach(col => {
         col.addEventListener("touchstart", (e) => {
           if (e.target.closest(".event")) return;
@@ -2900,47 +2958,31 @@
             endM: snapped.m,
             moved: false,
             overlay: null,
-            startY: touch.clientY
+            startY: touch.clientY,
+            type: "touch"
           };
         }, { passive: true });
 
         col.addEventListener("touchmove", (e) => {
-          if (!dragState || dragState.col !== col) return;
+          if (!dragState || dragState.col !== col || dragState.type !== "touch") return;
           const touch = e.changedTouches[0];
           const dy = Math.abs(touch.clientY - dragState.startY);
-          if (dy < 12) return;
+          /* require 20px of vertical movement before treating as a time-range drag;
+             this lets normal page scrolls pass through uninterrupted */
+          if (dy < 20) return;
           dragState.moved = true;
           const { h, m } = getHourMinFromY(col, touch.clientY);
           const snapped = snapToSlot(h, m);
           dragState.endH = snapped.h;
           dragState.endM = snapped.m;
-
-          const startMin = Math.min(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
-          const endMin   = Math.max(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
-
-          const topPx    = (startMin - START_HOUR * 60) / 60 * HOUR_HEIGHT;
-          const heightPx = Math.max(HOUR_HEIGHT / 2, (endMin - startMin) / 60 * HOUR_HEIGHT);
-
-          if (!dragState.overlay) {
-            dragState.overlay = document.createElement("div");
-            dragState.overlay.className = "time-select-overlay";
-            col.appendChild(dragState.overlay);
-          }
-          dragState.overlay.style.top    = `${topPx}px`;
-          dragState.overlay.style.height = `${heightPx}px`;
+          updateOverlay(dragState);
         }, { passive: true });
 
         col.addEventListener("touchend", () => {
-          if (!dragState || dragState.col !== col) return;
-          if (dragState.overlay) dragState.overlay.remove();
-          if (dragState.moved) {
-            const startMin = Math.min(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
-            const endMin   = Math.max(dragState.startH * 60 + dragState.startM, dragState.endH * 60 + dragState.endM);
-            const start = `${pad(Math.floor(startMin / 60))}:${pad(startMin % 60)}`;
-            const end   = `${pad(Math.floor(endMin   / 60))}:${pad(endMin   % 60)}`;
-            openModal({ date: dragState.date, start, end });
-          }
+          if (!dragState || dragState.col !== col || dragState.type !== "touch") return;
+          const ds = dragState;
           dragState = null;
+          commitDrag(ds);
         }, { passive: true });
       });
     }
@@ -3150,7 +3192,7 @@
                     const cal = getCalendar(ev.calendarId);
                     const color = ev.color || cal.color;
                     const label = ev.allDay ? escapeHtml(ev.title) : `${ev.start} ${escapeHtml(ev.title)}`;
-                    return `<button class="month-event" data-event-id="${ev.id}" data-date="${ev.date}" style="--ev-clr:${color};border-left-color:${color}">${label}</button>`;
+                    return `<button class="month-event" data-event-id="${ev.id}" data-date="${ev.date}" style="background:${color}">${label}</button>`;
                   }).join("")}
                   ${hidden > 0 ? `<div class="more-label" style="color:var(--muted);font-size:12px;font-weight:700;">+ ещё ${hidden}</div>` : ""}
                 </div>
