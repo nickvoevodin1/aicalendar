@@ -1376,6 +1376,193 @@
       outline: 2px solid var(--accent-dark);
       outline-offset: 2px;
     }
+
+    /* ---------- ADDED FEATURES ---------- */
+
+    /* natural-language quick add */
+    .quick-add {
+      width: 100%;
+      height: 44px;
+      margin-bottom: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-3);
+      padding: 0 14px;
+      color: var(--text);
+      font-size: 14px;
+    }
+    .quick-add:focus { outline: none; border-color: var(--accent); }
+    .quick-add-hint {
+      font-size: 11px;
+      color: var(--muted-2);
+      margin: -4px 0 14px;
+      line-height: 1.4;
+    }
+
+    /* multiple reminders as chips */
+    .reminders-group { display: flex; flex-wrap: wrap; gap: 6px; }
+    .reminder-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--surface-3);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+    }
+    .reminder-chip input { display: none; }
+    .reminder-chip.on {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--accent-text);
+    }
+
+    /* task checkbox inside timed events */
+    .event.is-task { padding-left: 8px; }
+    .event-head { display: flex; align-items: flex-start; gap: 6px; }
+    .event-check {
+      flex: 0 0 auto;
+      width: 16px;
+      height: 16px;
+      margin-top: 1px;
+      border-radius: 5px;
+      border: 2px solid rgba(255,255,255,.85);
+      background: transparent;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .event-check svg { opacity: 0; width: 11px; height: 11px; }
+    .event.done .event-check { background: rgba(255,255,255,.92); }
+    .event.done .event-check svg { opacity: 1; }
+    .event.done .event-title { text-decoration: line-through; opacity: .85; }
+
+    /* agenda task checkbox */
+    .agenda-check {
+      flex: 0 0 auto;
+      align-self: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 2px solid var(--line);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .agenda-check svg { opacity: 0; width: 13px; height: 13px; color: var(--accent-text); }
+    .agenda-item.done .agenda-check { background: var(--accent); border-color: var(--accent); }
+    .agenda-item.done .agenda-check svg { opacity: 1; }
+    .agenda-item.done .agenda-title { text-decoration: line-through; color: var(--muted); }
+
+    /* resize handle on timed events */
+    .event-resize {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 12px;
+      cursor: ns-resize;
+      touch-action: none;
+    }
+    .event-resize::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 3px;
+      width: 26px;
+      height: 3px;
+      border-radius: 3px;
+      background: rgba(255,255,255,.6);
+      transform: translateX(-50%);
+    }
+
+    /* recurring badge */
+    .event-repeat-badge { margin-left: 4px; opacity: .8; font-size: 10px; }
+
+    /* read-only holiday chip in all-day row */
+    .allday-chip.holiday { font-style: italic; }
+
+    /* small settings rows in drawer */
+    .setting-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 0;
+      font-size: 14px;
+      font-weight: 650;
+    }
+    .switch { position: relative; width: 42px; height: 24px; flex: 0 0 auto; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch span {
+      position: absolute; inset: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      transition: background .2s;
+    }
+    .switch span::before {
+      content: "";
+      position: absolute;
+      width: 18px; height: 18px;
+      left: 2px; top: 2px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,.3);
+      transition: transform .2s;
+    }
+    .switch input:checked + span { background: var(--accent); border-color: var(--accent); }
+    .switch input:checked + span::before { transform: translateX(18px); }
+
+    /* this/all chooser sheet */
+    .choice-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(8, 0, 20, .5);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 60;
+    }
+    .choice-backdrop.open { display: flex; }
+    .choice-sheet {
+      background: var(--surface);
+      width: min(420px, 100%);
+      border-radius: 22px 22px 0 0;
+      padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
+      box-shadow: var(--shadow);
+    }
+    @media (min-width: 761px) {
+      .choice-backdrop { align-items: center; }
+      .choice-sheet { border-radius: 22px; }
+    }
+    .choice-sheet h3 { margin: 0 0 4px; font-size: 17px; }
+    .choice-sheet p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .choice-sheet button {
+      width: 100%;
+      height: 46px;
+      border-radius: 13px;
+      font-weight: 750;
+      font-size: 14px;
+      margin-bottom: 8px;
+      background: var(--surface-2);
+      color: var(--text);
+    }
+    .choice-sheet button.primary { background: var(--accent); color: var(--accent-text); }
+
+    /* undo action inside toast */
+    .toast .toast-undo {
+      margin-left: 12px;
+      color: var(--accent);
+      font-weight: 800;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    [data-theme="dark"] .toast .toast-undo { color: #d8b4fe; }
   </style>
 </head>
 <body>
@@ -1435,6 +1622,9 @@
 
       <input class="sidebar-search" id="searchInputMobile" placeholder="Поиск по событиям" />
 
+      <input class="quick-add" id="quickAdd" placeholder="Завтра в 15 созвон на час…" />
+      <div class="quick-add-hint">Быстрое создание: «завтра в 15:30 встреча на 2 часа». Enter — открыть карточку.</div>
+
       <button class="create-btn" id="createBtn">＋ Создать событие</button>
 
       <section class="sidebar-section">
@@ -1460,6 +1650,20 @@
           <span>Ближайшие</span>
         </div>
         <div class="upcoming" id="upcomingList"></div>
+      </section>
+
+      <section class="sidebar-section">
+        <div class="section-head">
+          <span>Настройки</span>
+        </div>
+        <div class="setting-row">
+          <span>Уведомления в браузере</span>
+          <label class="switch"><input type="checkbox" id="setNotify" /><span></span></label>
+        </div>
+        <div class="setting-row">
+          <span>Российские праздники</span>
+          <label class="switch"><input type="checkbox" id="setHolidays" checked /><span></span></label>
+        </div>
       </section>
 
       <section class="sidebar-section">
@@ -1496,6 +1700,11 @@
           <span>Весь день</span>
         </label>
 
+        <label class="allday-toggle" for="eventIsTask">
+          <input type="checkbox" id="eventIsTask" />
+          <span>Это задача (с галочкой выполнения)</span>
+        </label>
+
         <div class="form-grid">
           <div class="field">
             <label for="eventDate">Дата</label>
@@ -1519,15 +1728,24 @@
         </div>
 
         <div class="field">
-          <label for="eventReminder">Напоминание</label>
-          <select id="eventReminder">
-            <option value="">Без напоминания</option>
-            <option value="0">В момент начала</option>
-            <option value="10">За 10 минут</option>
-            <option value="30">За 30 минут</option>
-            <option value="60">За 1 час</option>
-            <option value="1440">За 1 день</option>
+          <label for="eventRepeat">Повтор</label>
+          <select id="eventRepeat">
+            <option value="none">Не повторять</option>
+            <option value="daily">Каждый день</option>
+            <option value="weekly">Каждую неделю</option>
+            <option value="monthly">Каждый месяц</option>
           </select>
+        </div>
+
+        <div class="field">
+          <label>Напоминания</label>
+          <div class="reminders-group" id="remindersGroup">
+            <label class="reminder-chip"><input type="checkbox" value="0" /><span>В момент</span></label>
+            <label class="reminder-chip"><input type="checkbox" value="10" /><span>За 10 мин</span></label>
+            <label class="reminder-chip"><input type="checkbox" value="30" /><span>За 30 мин</span></label>
+            <label class="reminder-chip"><input type="checkbox" value="60" /><span>За 1 час</span></label>
+            <label class="reminder-chip"><input type="checkbox" value="1440" /><span>За 1 день</span></label>
+          </div>
         </div>
 
         <div class="field">
@@ -1545,6 +1763,16 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div class="choice-backdrop" id="choiceBackdrop">
+    <div class="choice-sheet">
+      <h3 id="choiceTitle">Повторяющееся событие</h3>
+      <p id="choiceText">Применить изменение к этому событию или ко всей серии?</p>
+      <button type="button" class="primary" id="choiceThis">Только это событие</button>
+      <button type="button" id="choiceAll">Все повторения</button>
+      <button type="button" id="choiceCancel">Отмена</button>
+    </div>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1581,7 +1809,20 @@
       { id: "work", name: "Работа", color: "#3b82f6" },
       { id: "personal", name: "Личное", color: "#10b981" },
       { id: "study", name: "Учёба", color: "#8b5cf6" },
-      { id: "startup", name: "Стартап", color: "#f97316" }
+      { id: "startup", name: "Стартап", color: "#f97316" },
+      { id: "holidays", name: "Праздники", color: "#a855f7", readonly: true }
+    ];
+
+    /* Fixed-date Russian public holidays */
+    const RU_HOLIDAYS = [
+      { m: 1, d: 1, name: "Новый год" },
+      { m: 1, d: 7, name: "Рождество Христово" },
+      { m: 2, d: 23, name: "День защитника Отечества" },
+      { m: 3, d: 8, name: "Международный женский день" },
+      { m: 5, d: 1, name: "Праздник Весны и Труда" },
+      { m: 5, d: 9, name: "День Победы" },
+      { m: 6, d: 12, name: "День России" },
+      { m: 11, d: 4, name: "День народного единства" }
     ];
 
     const demoEvents = [
@@ -1642,7 +1883,11 @@
       visibleCalendars: new Set(calendars.map(c => c.id)),
       search: "",
       editingId: null,
-      events: loadEvents()
+      editingInstanceDate: null,
+      events: loadEvents(),
+      showHolidays: loadFlag("focusCalendar.holidays", true),
+      notify: loadFlag("focusCalendar.notify", false),
+      history: []
     };
 
     const els = {
@@ -1669,12 +1914,23 @@
       cancelModal: document.getElementById("cancelModal"),
       deleteEvent: document.getElementById("deleteEvent"),
       duplicateEvent: document.getElementById("duplicateEvent"),
+      eventIsTask: document.getElementById("eventIsTask"),
+      eventRepeat: document.getElementById("eventRepeat"),
+      remindersGroup: document.getElementById("remindersGroup"),
+      quickAdd: document.getElementById("quickAdd"),
+      setNotify: document.getElementById("setNotify"),
+      setHolidays: document.getElementById("setHolidays"),
+      choiceBackdrop: document.getElementById("choiceBackdrop"),
+      choiceTitle: document.getElementById("choiceTitle"),
+      choiceText: document.getElementById("choiceText"),
+      choiceThis: document.getElementById("choiceThis"),
+      choiceAll: document.getElementById("choiceAll"),
+      choiceCancel: document.getElementById("choiceCancel"),
       eventTitle: document.getElementById("eventTitle"),
       eventDate: document.getElementById("eventDate"),
       eventStart: document.getElementById("eventStart"),
       eventEnd: document.getElementById("eventEnd"),
       eventCalendar: document.getElementById("eventCalendar"),
-      eventReminder: document.getElementById("eventReminder"),
       eventDescription: document.getElementById("eventDescription"),
       eventAllDay: document.getElementById("eventAllDay"),
       timeFields: document.getElementById("timeFields"),
@@ -1696,6 +1952,7 @@
       renderEventCalendarOptions();
       bindEvents();
       renderAll();
+      scheduleNotifications();
     }
 
     /* ---------------- THEME ---------------- */
@@ -1795,20 +2052,39 @@
         els.timeFields.style.display = els.eventAllDay.checked ? "none" : "grid";
       });
 
+      els.remindersGroup.addEventListener("change", (e) => {
+        const chip = e.target.closest(".reminder-chip");
+        if (chip) chip.classList.toggle("on", chip.querySelector("input").checked);
+      });
+
       els.deleteEvent.addEventListener("click", () => {
         if (!state.editingId) return;
-        state.events = state.events.filter(ev => ev.id !== state.editingId);
-        saveEvents();
-        closeModal();
-        renderAll();
-        showToast("Событие удалено");
+        const base = state.events.find(ev => ev.id === state.editingId);
+        if (!base) return;
+        const doDelete = (scope) => {
+          pushHistory();
+          if (scope === "this") {
+            base.exceptions = [...(base.exceptions || []), state.editingInstanceDate];
+            showToast("Удалено только это событие");
+          } else {
+            state.events = state.events.filter(ev => ev.id !== base.id);
+            showToast("Событие удалено");
+          }
+          saveEvents();
+          scheduleNotifications();
+          closeModal();
+          renderAll();
+        };
+        if (base.repeat && base.repeat !== "none") askThisOrAll("Удалить", doDelete);
+        else doDelete("all");
       });
 
       els.duplicateEvent.addEventListener("click", () => {
         if (!state.editingId) return;
         const original = state.events.find(ev => ev.id === state.editingId);
         if (!original) return;
-        const copy = { ...original, id: uid(), title: original.title + " (копия)" };
+        pushHistory();
+        const copy = normalizeEvent({ ...original, id: uid(), title: original.title + " (копия)", exceptions: [], doneDates: [] });
         state.events.push(copy);
         saveEvents();
         closeModal();
@@ -1825,11 +2101,164 @@
         showToast("На 2 этапе сюда добавим автопланирование задач по свободным слотам");
       });
 
+      // natural-language quick add
+      els.quickAdd.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        const text = els.quickAdd.value.trim();
+        if (!text) return;
+        const parsed = parseNaturalLanguage(text);
+        els.quickAdd.value = "";
+        if (isMobile()) closeDrawer();
+        openModal(parsed);
+      });
+
+      // settings toggles
+      els.setNotify.checked = state.notify;
+      els.setHolidays.checked = state.showHolidays;
+      els.setNotify.addEventListener("change", async () => {
+        if (els.setNotify.checked) {
+          const ok = await requestNotifyPermission();
+          if (!ok) { els.setNotify.checked = false; showToast("Браузер не разрешил уведомления"); return; }
+        }
+        state.notify = els.setNotify.checked;
+        saveFlag("focusCalendar.notify", state.notify);
+        scheduleNotifications();
+        showToast(state.notify ? "Уведомления включены" : "Уведомления выключены");
+      });
+      els.setHolidays.addEventListener("change", () => {
+        state.showHolidays = els.setHolidays.checked;
+        saveFlag("focusCalendar.holidays", state.showHolidays);
+        renderAll();
+      });
+
+      // recurring chooser backdrop close on outside click
+      els.choiceBackdrop.addEventListener("click", (e) => {
+        if (e.target === els.choiceBackdrop && els.choiceCancel.onclick) els.choiceCancel.onclick();
+      });
+
       document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") { closeModal(); closeDrawer(); }
+        if (e.key === "Escape") { closeModal(); closeDrawer(); els.choiceBackdrop.classList.remove("open"); }
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") {
+          const tag = (e.target.tagName || "").toLowerCase();
+          if (tag === "input" || tag === "textarea" || tag === "select") return;
+          e.preventDefault();
+          undo();
+        }
       });
 
       bindSwipe();
+    }
+
+    /* ---------------- UNDO ---------------- */
+    function pushHistory() {
+      state.history.push(JSON.stringify(state.events));
+      if (state.history.length > 50) state.history.shift();
+    }
+    function undo() {
+      if (!state.history.length) { showToast("Нечего отменять"); return; }
+      state.events = JSON.parse(state.history.pop()).map(normalizeEvent);
+      saveEvents();
+      scheduleNotifications();
+      renderAll();
+      showToast("Действие отменено");
+    }
+
+    /* ---------------- NOTIFICATIONS ---------------- */
+    let notifyTimers = [];
+    function requestNotifyPermission() {
+      if (!("Notification" in window)) return Promise.resolve(false);
+      if (Notification.permission === "granted") return Promise.resolve(true);
+      if (Notification.permission === "denied") return Promise.resolve(false);
+      return Notification.requestPermission().then(p => p === "granted");
+    }
+    function scheduleNotifications() {
+      notifyTimers.forEach(t => clearTimeout(t));
+      notifyTimers = [];
+      if (!state.notify) return;
+      const now = Date.now();
+      const horizon = isoDate(addDays(new Date(), 2));
+      getOccurrences(isoDate(new Date()), horizon).forEach(ev => {
+        if (ev._holiday || !ev.reminders || !ev.reminders.length) return;
+        const [h, m] = (ev.allDay ? "09:00" : ev.start).split(":").map(Number);
+        const evStart = parseDate(ev.date); evStart.setHours(h, m, 0, 0);
+        ev.reminders.forEach(offset => {
+          const fireAt = evStart.getTime() - offset * 60000;
+          const delay = fireAt - now;
+          if (delay > 0 && delay < 1000 * 60 * 60 * 36) {
+            notifyTimers.push(setTimeout(() => fireNotification(ev, offset), delay));
+          }
+        });
+      });
+    }
+    function fireNotification(ev, offset) {
+      const when = offset === 0 ? "сейчас" : `через ${offset < 60 ? offset + " мин" : (offset / 60) + " ч"}`;
+      const body = `${ev.allDay ? "Весь день" : ev.start} · ${when}`;
+      try {
+        if (state.notify && "Notification" in window && Notification.permission === "granted") {
+          new Notification(ev.title, { body });
+          return;
+        }
+      } catch {}
+      showToast(`🔔 ${ev.title} — ${when}`);
+    }
+
+    /* ---------------- NATURAL LANGUAGE QUICK ADD ---------------- */
+    /* NB: JS \b word boundaries don't work with Cyrillic, so we use
+       whitespace boundaries + explicit [а-яё] classes for declensions. */
+    function parseNaturalLanguage(text) {
+      let rest = " " + text + " ";
+      const today = new Date();
+      let date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+      // relative days
+      if (/\sпослезавтра\s/i.test(rest)) { date = addDays(date, 2); rest = rest.replace(/\sпослезавтра\s/i, " "); }
+      else if (/\sзавтра\s/i.test(rest)) { date = addDays(date, 1); rest = rest.replace(/\sзавтра\s/i, " "); }
+      else if (/\sсегодня\s/i.test(rest)) { rest = rest.replace(/\sсегодня\s/i, " "); }
+
+      // weekday ("в понедельник", "во вторник", "в среду" ...) -> next matching weekday
+      const weekdays = [
+        { re: /\s(?:во?\s+)?воскресень[а-яё]*\s/i, dow: 0 },
+        { re: /\s(?:во?\s+)?понедельник[а-яё]*\s/i, dow: 1 },
+        { re: /\s(?:во?\s+)?вторник[а-яё]*\s/i, dow: 2 },
+        { re: /\s(?:во?\s+)?сред[ауы][а-яё]*\s/i, dow: 3 },
+        { re: /\s(?:во?\s+)?четверг[а-яё]*\s/i, dow: 4 },
+        { re: /\s(?:во?\s+)?пятниц[ауы][а-яё]*\s/i, dow: 5 },
+        { re: /\s(?:во?\s+)?суббот[ауы][а-яё]*\s/i, dow: 6 }
+      ];
+      for (const wd of weekdays) {
+        if (wd.re.test(rest)) {
+          let d = new Date(date);
+          for (let i = 0; i < 8; i++) { if (d.getDay() === wd.dow && d > date) break; d = addDays(d, 1); }
+          date = d;
+          rest = rest.replace(wd.re, " ");
+          break;
+        }
+      }
+
+      // time "в 15:30" / "15:30" (with minutes)
+      let start = null;
+      let tm = rest.match(/\s(?:в\s*)?(\d{1,2})[:.](\d{2})(?=\s)/i);
+      if (tm) {
+        start = `${pad(Math.min(23, +tm[1]))}:${pad(Math.min(59, +tm[2]))}`;
+        rest = rest.replace(tm[0], " ");
+      } else {
+        // hour-only time requires the "в" preposition ("в 15") to avoid eating durations
+        tm = rest.match(/\sв\s*(\d{1,2})(?:\s*(?:час[а-яё]*|ч))?(?=\s)/i);
+        if (tm) { start = `${pad(Math.min(23, +tm[1]))}:00`; rest = rest.replace(tm[0], " "); }
+      }
+
+      // duration "на час", "на полчаса", "на 2 часа", "на 30 минут", "на 90 мин"
+      let durMin = 60;
+      let dm = rest.match(/\sна\s*(\d+)\s*(?:минут[а-яё]*|мин)(?=\s)/i);
+      if (dm) { durMin = +dm[1]; rest = rest.replace(dm[0], " "); }
+      else if ((dm = rest.match(/\sна\s*(\d+)\s*(?:час[а-яё]*|ч)(?=\s)/i))) { durMin = +dm[1] * 60; rest = rest.replace(dm[0], " "); }
+      else if (/\sна\s+полчаса(?=\s)/i.test(rest)) { durMin = 30; rest = rest.replace(/\sна\s+полчаса(?=\s)/i, " "); }
+      else if (/\sна\s+час(?=\s)/i.test(rest)) { durMin = 60; rest = rest.replace(/\sна\s+час(?=\s)/i, " "); }
+
+      const title = rest.replace(/\s+/g, " ").trim() || "Новое событие";
+      if (!start) start = nextRoundedTime();
+      const end = addMinutesToTime(start, durMin);
+      return { title: title.charAt(0).toUpperCase() + title.slice(1), date: isoDate(date), start, end, calendarId: "startup" };
     }
 
     /* swipe to navigate prev/next on the calendar area */
@@ -1926,7 +2355,8 @@
     }
 
     function renderEventCalendarOptions() {
-      els.eventCalendar.innerHTML = calendars.map(cal => `<option value="${cal.id}">${cal.name}</option>`).join("");
+      els.eventCalendar.innerHTML = calendars.filter(cal => !cal.readonly)
+        .map(cal => `<option value="${cal.id}">${cal.name}</option>`).join("");
     }
 
     function renderMiniMonth() {
@@ -1980,6 +2410,7 @@
 
       const headerClass = isWeek ? "week-header" : "day-header";
       const gridClass = isWeek ? "week-grid" : "day-grid";
+      const occ = getOccurrences(isoDate(days[0]), isoDate(days[days.length - 1]));
 
       const dowRow = `
         <div class="hrow dow-row">
@@ -1997,10 +2428,11 @@
         <div class="hrow allday-row">
           <div class="allday-label">весь<br>день</div>
           ${days.map(day => {
-            const dayAllDay = getVisibleEvents().filter(ev => ev.date === isoDate(day) && ev.allDay);
+            const dayAllDay = occ.filter(ev => ev.date === isoDate(day) && ev.allDay);
             return `<div class="allday-cell">${dayAllDay.map(ev => {
               const cal = getCalendar(ev.calendarId);
-              return `<button class="allday-chip" data-event-id="${ev.id}" style="background:${cal.color}">${escapeHtml(ev.title)}</button>`;
+              const cls = "allday-chip" + (ev._holiday ? " holiday" : "");
+              return `<button class="${cls}" data-event-id="${ev.id}" data-date="${ev.date}" style="background:${cal.color}">${escapeHtml(ev.title)}</button>`;
             }).join("")}</div>`;
           }).join("")}
         </div>
@@ -2015,7 +2447,7 @@
       `;
 
       const columns = days.map(day => {
-        const dayEvents = getVisibleEvents().filter(ev => ev.date === isoDate(day) && !ev.allDay);
+        const dayEvents = occ.filter(ev => ev.date === isoDate(day) && !ev.allDay);
         const dayClass = [
           "day-col",
           [0,6].includes(day.getDay()) ? "weekend" : "",
@@ -2068,6 +2500,8 @@
       return sorted.map(ev => eventMarkup(ev, ev._col || 0, total)).join("");
     }
 
+    const CHECK_SVG = '<svg viewBox="0 0 12 12" fill="none"><path d="M2 6l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
     function eventMarkup(ev, col = 0, total = 1) {
       const cal = getCalendar(ev.calendarId);
       const top = (timeToMinutes(ev.start) - START_HOUR * 60) / 60 * HOUR_HEIGHT;
@@ -2078,12 +2512,23 @@
       const leftStyle = total > 1
         ? `left:calc(${col * widthPct}% + 6px);width:calc(${widthPct}% - ${gap + 6}px);right:auto;`
         : "";
+      const classes = ["event", compact, ev.isTask ? "is-task" : "", ev.done ? "done" : ""].filter(Boolean).join(" ");
+      const check = ev.isTask
+        ? `<button class="event-check" data-toggle-done="${ev.id}" data-date="${ev.date}" title="Отметить выполнение" style="color:${cal.color}">${CHECK_SVG}</button>`
+        : "";
+      const repeatBadge = (ev.repeat && ev.repeat !== "none") ? `<span class="event-repeat-badge">⟳</span>` : "";
       return `
-        <div class="event ${compact}" draggable="true" data-event-id="${ev.id}"
+        <div class="${classes}" draggable="true" data-event-id="${ev.id}" data-date="${ev.date}"
              style="top:${top}px;height:${height}px;background:${cal.color};${leftStyle}">
-          <div class="event-title">${escapeHtml(ev.title)}</div>
-          <div class="event-time">${ev.start} — ${ev.end}</div>
-          ${height > 70 && ev.description ? `<div class="event-desc">${escapeHtml(ev.description)}</div>` : ""}
+          <div class="event-head">
+            ${check}
+            <div style="min-width:0;flex:1">
+              <div class="event-title">${escapeHtml(ev.title)}${repeatBadge}</div>
+              <div class="event-time">${ev.start} — ${ev.end}</div>
+              ${height > 78 && ev.description ? `<div class="event-desc">${escapeHtml(ev.description)}</div>` : ""}
+            </div>
+          </div>
+          ${(ev._holiday || height < 44) ? "" : `<div class="event-resize" data-resize="${ev.id}" data-date="${ev.date}"></div>`}
         </div>
       `;
     }
@@ -2217,16 +2662,94 @@
       });
     }
 
+    function openByElement(el) {
+      const id = el.dataset.eventId;
+      const date = el.dataset.date;
+      if (id && id.startsWith("hol-")) {
+        showToast(el.textContent.trim() + " — государственный праздник");
+        return;
+      }
+      const base = state.events.find(x => x.id === id);
+      if (base) openModal({ ...base, date: date || base.date });
+    }
+
+    function toggleDone(id, date) {
+      const ev = state.events.find(x => x.id === id);
+      if (!ev) return;
+      pushHistory();
+      if (ev.repeat && ev.repeat !== "none") {
+        if (!Array.isArray(ev.doneDates)) ev.doneDates = [];
+        const i = ev.doneDates.indexOf(date);
+        if (i >= 0) ev.doneDates.splice(i, 1); else ev.doneDates.push(date);
+      } else {
+        ev.done = !ev.done;
+      }
+      saveEvents();
+      renderAll();
+    }
+
     function bindEventInteractions() {
-      els.calendarShell.querySelectorAll("[data-event-id]").forEach(el => {
-        el.addEventListener("click", (e) => {
+      els.calendarShell.querySelectorAll("[data-toggle-done]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
           e.stopPropagation();
-          const ev = state.events.find(item => item.id === el.dataset.eventId);
-          if (ev) openModal(ev);
+          toggleDone(btn.dataset.toggleDone, btn.dataset.date);
+        });
+      });
+
+      els.calendarShell.querySelectorAll("[data-resize]").forEach(bindResize);
+
+      els.calendarShell.querySelectorAll(".event[data-event-id], .allday-chip[data-event-id]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          if (e.target.closest("[data-toggle-done], [data-resize]")) return;
+          e.stopPropagation();
+          openByElement(el);
         });
         el.addEventListener("dragstart", (e) => {
           e.dataTransfer.setData("text/event-id", el.dataset.eventId);
         });
+      });
+    }
+
+    /* drag the bottom edge of a timed event to change its end time */
+    function bindResize(handle) {
+      handle.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const eventEl = handle.closest(".event");
+        const col = handle.closest(".day-col");
+        if (!eventEl || !col) return;
+        const ev = state.events.find(x => x.id === handle.dataset.resize);
+        if (!ev) return;
+
+        eventEl.draggable = false;
+        handle.setPointerCapture(e.pointerId);
+        const colRect = col.getBoundingClientRect();
+        const startMin = timeToMinutes(ev.start);
+
+        const move = (me) => {
+          const y = me.clientY - colRect.top;
+          let endMin = START_HOUR * 60 + Math.round((y / HOUR_HEIGHT * 60) / 15) * 15;
+          endMin = Math.min(END_HOUR * 60, Math.max(startMin + 15, endMin));
+          eventEl.style.height = `${Math.max(30, (endMin - startMin) / 60 * HOUR_HEIGHT - 4)}px`;
+          eventEl.dataset.tmpEnd = `${pad(Math.floor(endMin / 60))}:${pad(endMin % 60)}`;
+        };
+        const up = () => {
+          handle.removeEventListener("pointermove", move);
+          handle.removeEventListener("pointerup", up);
+          const newEnd = eventEl.dataset.tmpEnd;
+          eventEl.draggable = true;
+          if (newEnd && newEnd !== ev.end) {
+            pushHistory();
+            ev.end = newEnd;
+            saveEvents();
+            renderAll();
+            showToast("Длительность изменена" + (ev.repeat !== "none" ? " (для всей серии)" : ""));
+          } else {
+            renderAll();
+          }
+        };
+        handle.addEventListener("pointermove", move);
+        handle.addEventListener("pointerup", up);
       });
     }
 
@@ -2236,8 +2759,7 @@
       const startIso = isoDate(startDate);
       const horizon = isoDate(addDays(startDate, 60));
 
-      const events = getVisibleEvents()
-        .filter(ev => ev.date >= startIso && ev.date <= horizon)
+      const events = getOccurrences(startIso, horizon)
         .sort((a, b) => (a.date).localeCompare(b.date)
           || Number(b.allDay) - Number(a.allDay)
           || a.start.localeCompare(b.start));
@@ -2262,11 +2784,16 @@
         const items = groups[dateStr].map(ev => {
           const cal = getCalendar(ev.calendarId);
           const time = ev.allDay ? "Весь день" : `${ev.start} — ${ev.end}`;
+          const repeatBadge = (ev.repeat && ev.repeat !== "none") ? " ⟳" : "";
+          const check = ev.isTask
+            ? `<button class="agenda-check" data-toggle-done="${ev.id}" data-date="${ev.date}" title="Выполнено">${CHECK_SVG}</button>`
+            : "";
           return `
-            <button class="agenda-item" data-event-id="${ev.id}">
+            <button class="agenda-item ${ev.done ? "done" : ""}" data-event-id="${ev.id}" data-date="${ev.date}">
+              ${check}
               <span class="agenda-bar" style="background:${cal.color}"></span>
               <span class="agenda-meta">
-                <span class="agenda-time">${time}</span>
+                <span class="agenda-time">${time}${repeatBadge}</span>
                 <span class="agenda-title">${escapeHtml(ev.title)}</span>
                 ${ev.description ? `<span class="agenda-note">${escapeHtml(ev.description)}</span>` : ""}
                 <span class="agenda-cal"><span class="calendar-dot" style="width:8px;height:8px;background:${cal.color}"></span>${cal.name}</span>
@@ -2287,10 +2814,16 @@
 
       els.calendarShell.innerHTML = `<div class="agenda-view"><div class="agenda-wrap">${html}</div></div>`;
 
-      els.calendarShell.querySelectorAll("[data-event-id]").forEach(el => {
-        el.addEventListener("click", () => {
-          const ev = state.events.find(item => item.id === el.dataset.eventId);
-          if (ev) openModal(ev);
+      els.calendarShell.querySelectorAll("[data-toggle-done]").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          toggleDone(btn.dataset.toggleDone, btn.dataset.date);
+        });
+      });
+      els.calendarShell.querySelectorAll(".agenda-item[data-event-id]").forEach(el => {
+        el.addEventListener("click", (e) => {
+          if (e.target.closest("[data-toggle-done]")) return;
+          openByElement(el);
         });
       });
     }
@@ -2302,6 +2835,7 @@
       const first = new Date(year, month, 1);
       const gridStart = startOfWeek(first);
       const days = Array.from({ length: 42 }, (_, i) => addDays(gridStart, i));
+      const occ = getOccurrences(isoDate(gridStart), isoDate(days[41]));
 
       els.calendarShell.innerHTML = `
         <div class="month-view">
@@ -2309,7 +2843,7 @@
             ${DOW.map(d => `<div class="month-dow">${d}</div>`).join("")}
             ${days.map(day => {
               const dateStr = isoDate(day);
-              const events = getVisibleEvents().filter(ev => ev.date === dateStr)
+              const events = occ.filter(ev => ev.date === dateStr)
                 .sort((a,b)=> Number(b.allDay)-Number(a.allDay) || a.start.localeCompare(b.start));
               const shown = events.slice(0, 4);
               const hidden = events.length - shown.length;
@@ -2331,7 +2865,7 @@
                   ${shown.map(ev => {
                     const cal = getCalendar(ev.calendarId);
                     const label = ev.allDay ? escapeHtml(ev.title) : `${ev.start} ${escapeHtml(ev.title)}`;
-                    return `<button class="month-event" data-event-id="${ev.id}" style="background:${cal.color}">${label}</button>`;
+                    return `<button class="month-event" data-event-id="${ev.id}" data-date="${ev.date}" style="background:${cal.color}">${label}</button>`;
                   }).join("")}
                   ${hidden > 0 ? `<div class="more-label" style="color:var(--muted);font-size:12px;font-weight:700;">+ ещё ${hidden}</div>` : ""}
                 </div>
@@ -2361,8 +2895,7 @@
       els.calendarShell.querySelectorAll(".month-event[data-event-id]").forEach(el => {
         el.addEventListener("click", (e) => {
           e.stopPropagation();
-          const ev = state.events.find(item => item.id === el.dataset.eventId);
-          if (ev) openModal(ev);
+          openByElement(el);
         });
       });
 
@@ -2375,8 +2908,9 @@
 
     function renderUpcoming() {
       const nowDate = isoDate(new Date());
-      const events = getVisibleEvents()
-        .filter(ev => ev.date >= nowDate)
+      const horizon = isoDate(addDays(new Date(), 90));
+      const events = getOccurrences(nowDate, horizon)
+        .filter(ev => !ev._holiday)
         .sort((a, b) => (a.date + (a.allDay ? "00:00" : a.start)).localeCompare(b.date + (b.allDay ? "00:00" : b.start)))
         .slice(0, 5);
 
@@ -2390,7 +2924,7 @@
         const cal = getCalendar(ev.calendarId);
         const time = ev.allDay ? "весь день" : `${ev.start} — ${ev.end}`;
         return `
-          <button class="upcoming-card" data-event-id="${ev.id}" style="text-align:left;border-left:4px solid ${cal.color}">
+          <button class="upcoming-card" data-event-id="${ev.id}" data-date="${ev.date}" style="text-align:left;border-left:4px solid ${cal.color}">
             <div class="upcoming-time">${humanDate(day)} · ${time}</div>
             <div class="upcoming-title">${escapeHtml(ev.title)}</div>
           </button>
@@ -2401,28 +2935,43 @@
         btn.addEventListener("click", () => {
           const ev = state.events.find(item => item.id === btn.dataset.eventId);
           if (ev) {
-            state.selectedDate = parseDate(ev.date);
-            state.miniDate = parseDate(ev.date);
+            state.selectedDate = parseDate(btn.dataset.date);
+            state.miniDate = parseDate(btn.dataset.date);
             if (isMobile()) closeDrawer();
             renderAll();
-            openModal(ev);
+            openModal({ ...ev, date: btn.dataset.date });
           }
         });
       });
     }
 
     /* ---------------- MODAL ---------------- */
+    function setReminderChips(reminders) {
+      els.remindersGroup.querySelectorAll(".reminder-chip").forEach(chip => {
+        const input = chip.querySelector("input");
+        const on = reminders.includes(Number(input.value));
+        input.checked = on;
+        chip.classList.toggle("on", on);
+      });
+    }
+    function getReminderChips() {
+      return [...els.remindersGroup.querySelectorAll(".reminder-chip input:checked")].map(i => Number(i.value));
+    }
+
     function openModal(data = {}) {
       state.editingId = data.id || null;
+      state.editingInstanceDate = data.id ? (data.date || null) : null;
       els.modalTitle.textContent = data.id ? "Редактировать событие" : "Новое событие";
       els.eventTitle.value = data.title || "";
       els.eventDate.value = data.date || isoDate(state.selectedDate);
       els.eventStart.value = data.start || "10:00";
       els.eventEnd.value = data.end || "11:00";
-      els.eventCalendar.value = data.calendarId || "startup";
-      els.eventReminder.value = data.reminder || "";
+      els.eventCalendar.value = data.calendarId === "holidays" ? "startup" : (data.calendarId || "startup");
       els.eventDescription.value = data.description || "";
       els.eventAllDay.checked = Boolean(data.allDay);
+      els.eventIsTask.checked = Boolean(data.isTask);
+      els.eventRepeat.value = data.repeat || "none";
+      setReminderChips(Array.isArray(data.reminders) ? data.reminders : []);
       els.timeFields.style.display = els.eventAllDay.checked ? "none" : "grid";
       els.deleteEvent.classList.toggle("visible", Boolean(data.id));
       els.duplicateEvent.style.display = data.id ? "" : "none";
@@ -2433,7 +2982,9 @@
     function closeModal() {
       els.modalBackdrop.classList.remove("open");
       state.editingId = null;
+      state.editingInstanceDate = null;
       els.eventForm.reset();
+      setReminderChips([]);
       els.timeFields.style.display = "grid";
     }
 
@@ -2453,26 +3004,63 @@
         date: els.eventDate.value,
         start, end,
         allDay,
-        reminder: els.eventReminder.value,
+        isTask: els.eventIsTask.checked,
+        repeat: els.eventRepeat.value,
+        reminders: getReminderChips(),
         calendarId: els.eventCalendar.value,
         description: els.eventDescription.value.trim()
       };
 
       if (!payload.title) { showToast("Добавь название события"); return; }
 
-      if (state.editingId) {
-        state.events = state.events.map(ev => ev.id === state.editingId ? { ...ev, ...payload } : ev);
-        showToast("Событие обновлено");
-      } else {
-        state.events.push({ id: uid(), ...payload });
-        showToast("Событие создано");
-      }
+      const base = state.editingId ? state.events.find(ev => ev.id === state.editingId) : null;
 
-      saveEvents();
-      state.selectedDate = parseDate(payload.date);
-      state.miniDate = parseDate(payload.date);
-      closeModal();
-      renderAll();
+      const commit = (scope) => {
+        pushHistory();
+        if (!base) {
+          state.events.push(normalizeEvent({ id: uid(), ...payload }));
+          showToast("Событие создано");
+        } else if (scope === "this") {
+          // detach this occurrence: add exception to series + create standalone event
+          base.exceptions = [...(base.exceptions || []), state.editingInstanceDate];
+          state.events.push(normalizeEvent({ id: uid(), ...payload, repeat: "none" }));
+          showToast("Изменено только это событие");
+        } else {
+          // edit whole series (or simple event): keep base id, keep series exceptions/doneDates
+          state.events = state.events.map(ev => ev.id === base.id
+            ? normalizeEvent({ ...ev, ...payload })
+            : ev);
+          showToast("Событие обновлено");
+        }
+        saveEvents();
+        scheduleNotifications();
+        state.selectedDate = parseDate(payload.date);
+        state.miniDate = parseDate(payload.date);
+        closeModal();
+        renderAll();
+      };
+
+      if (base && base.repeat && base.repeat !== "none") {
+        askThisOrAll("Изменить", commit);
+      } else {
+        commit("all");
+      }
+    }
+
+    /* this/all chooser for recurring events */
+    function askThisOrAll(verb, onChoose) {
+      els.choiceTitle.textContent = "Повторяющееся событие";
+      els.choiceText.textContent = `${verb} только это событие или всю серию повторений?`;
+      els.choiceThis.textContent = `${verb} только это событие`;
+      els.choiceAll.textContent = `${verb} все повторения`;
+      els.choiceBackdrop.classList.add("open");
+      const cleanup = () => {
+        els.choiceBackdrop.classList.remove("open");
+        els.choiceThis.onclick = els.choiceAll.onclick = els.choiceCancel.onclick = null;
+      };
+      els.choiceThis.onclick = () => { cleanup(); onChoose("this"); };
+      els.choiceAll.onclick = () => { cleanup(); onChoose("all"); };
+      els.choiceCancel.onclick = cleanup;
     }
 
     function getVisibleEvents() {
@@ -2483,17 +3071,90 @@
       });
     }
 
+    /* expand recurring events + holidays into concrete instances within [startIso, endIso] */
+    function getOccurrences(startIso, endIso) {
+      const out = [];
+      const startD = parseDate(startIso), endD = parseDate(endIso);
+
+      getVisibleEvents().forEach(ev => {
+        if (!ev.repeat || ev.repeat === "none") {
+          if (ev.date >= startIso && ev.date <= endIso) out.push(ev);
+          return;
+        }
+        // recurring: walk from base date until past the window
+        let cursor = parseDate(ev.date);
+        const baseDay = cursor.getDate();
+        let guard = 0;
+        while (cursor <= endD && guard < 1000) {
+          guard++;
+          const iso = isoDate(cursor);
+          if (cursor >= startD && !(ev.exceptions || []).includes(iso)) {
+            out.push({ ...ev, date: iso, _baseId: ev.id, _instanceDate: iso });
+          }
+          if (ev.repeat === "daily") cursor = addDays(cursor, 1);
+          else if (ev.repeat === "weekly") cursor = addDays(cursor, 7);
+          else {
+            // monthly: keep day-of-month, skip months that are too short
+            const nm = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
+            const maxDay = new Date(nm.getFullYear(), nm.getMonth() + 1, 0).getDate();
+            nm.setDate(Math.min(baseDay, maxDay));
+            cursor = nm;
+          }
+        }
+      });
+
+      // holidays
+      if (state.showHolidays && state.visibleCalendars.has("holidays")) {
+        for (let y = startD.getFullYear(); y <= endD.getFullYear(); y++) {
+          RU_HOLIDAYS.forEach(h => {
+            const iso = `${y}-${pad(h.m)}-${pad(h.d)}`;
+            if (iso >= startIso && iso <= endIso) {
+              out.push({
+                id: `hol-${iso}`, title: h.name, date: iso,
+                start: "00:00", end: "23:59", allDay: true,
+                calendarId: "holidays", reminders: [], repeat: "none",
+                isTask: false, done: false, description: "", _holiday: true
+              });
+            }
+          });
+        }
+      }
+      return out;
+    }
+
     function getCalendar(id) {
       return calendars.find(c => c.id === id) || calendars[0];
     }
 
     /* ---------------- STORAGE ---------------- */
+    function normalizeEvent(ev) {
+      const out = { allDay: false, repeat: "none", isTask: false, done: false, exceptions: [], reminders: [], ...ev };
+      // migrate legacy single `reminder` -> reminders[]
+      if (!Array.isArray(out.reminders)) out.reminders = [];
+      if (ev.reminder !== undefined && ev.reminder !== "" && ev.reminder !== null) {
+        const n = Number(ev.reminder);
+        if (!Number.isNaN(n) && !out.reminders.includes(n)) out.reminders.push(n);
+      }
+      delete out.reminder;
+      if (!Array.isArray(out.exceptions)) out.exceptions = [];
+      return out;
+    }
     function loadEvents() {
       try {
         const saved = localStorage.getItem("focusCalendar.events");
-        if (!saved) return demoEvents;
-        return JSON.parse(saved).map(ev => ({ allDay: false, reminder: "", ...ev }));
-      } catch { return demoEvents; }
+        if (!saved) return demoEvents.map(normalizeEvent);
+        return JSON.parse(saved).map(normalizeEvent);
+      } catch { return demoEvents.map(normalizeEvent); }
+    }
+    function loadFlag(key, fallback) {
+      try {
+        const v = localStorage.getItem(key);
+        if (v === null) return fallback;
+        return v === "true";
+      } catch { return fallback; }
+    }
+    function saveFlag(key, val) {
+      try { localStorage.setItem(key, String(val)); } catch {}
     }
     function saveEvents() {
       try { localStorage.setItem("focusCalendar.events", JSON.stringify(state.events)); } catch {}
